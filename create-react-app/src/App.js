@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [message, setMessage] = useState('Loading...');
+
+  useEffect(() => {
+    fetch('/api/hello?name=questleen')
+      .then((res) => res.json())
+      .then((data) => setMessage(data.message))
+      .catch(() => setMessage('Error fetching message'));
+  }, []);
+
   return (
     <div
       style={{
@@ -37,7 +46,7 @@ function App() {
           textAlign: 'center',
         }}
       >
-        Welcome to your adventure
+        {message}
       </p>
     </div>
   );
